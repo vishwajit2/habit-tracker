@@ -17,16 +17,40 @@ export default function LoginPage() {
     setLoading(true)
     setMessage('')
 
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    })
+    console.log(data, error)
+
+    if (error) {
+      setMessage(error.message)
+      setLoading(false)
+      return
+    }
+
+    // If signUp returns a session, the user is already authenticated.
+    if (data?.session) {
+      router.push('/')
+      router.refresh()
+      setLoading(false)
+      return
+    }
+
+    // Otherwise, try to sign in immediately (works when email confirmation is not required).
+    const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
-    if (error) {
-      setMessage(error.message)
+    if (signInError) {
+      // Likely requires email confirmation — inform the user.
+      setMessage('Account created. Check your email to confirm your account.')
     } else {
-      setMessage('Check your email to confirm your account!')
+      router.push('/')
+      router.refresh()
     }
+
     setLoading(false)
   }
 
@@ -76,7 +100,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm bg-white text-black placeholder-gray-400 opacity-100 caret-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                 placeholder="you@example.com"
               />
             </div>
@@ -91,7 +115,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm bg-white text-black placeholder-gray-400 opacity-100 caret-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                 placeholder="••••••••"
               />
             </div>

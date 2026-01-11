@@ -126,7 +126,7 @@ export default function HabitTracker({ user }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-gray-600">Loading...</div>
+        <div className="text-black">Loading...</div>
       </div>
     )
   }
@@ -141,11 +141,11 @@ export default function HabitTracker({ user }: Props) {
               <h1 className="text-4xl lg:text-5xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
                 Habit Tracker
               </h1>
-              <p className="text-gray-600">Build better habits, one day at a time</p>
+              <p className="text-black">Build better habits, one day at a time</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="px-4 py-2 bg-white rounded-full shadow-sm border border-gray-200">
-                <span className="text-sm text-gray-600">{user.email}</span>
+                <span className="text-sm text-black">{user.email}</span>
               </div>
               <button
                 onClick={handleSignOut}
@@ -164,7 +164,7 @@ export default function HabitTracker({ user }: Props) {
                 value={newHabitName}
                 onChange={(e) => setNewHabitName(e.target.value)}
                 placeholder="What habit do you want to build?"
-                className="flex-1 px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                className="flex-1 px-5 py-3 border border-gray-300 rounded-xl text-black placeholder-gray-400 caret-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
               />
               <button
                 type="submit"
@@ -225,7 +225,7 @@ export default function HabitTracker({ user }: Props) {
                     <td colSpan={9} className="px-6 py-16 text-center">
                       <div className="flex flex-col items-center gap-3">
                         <div className="text-6xl">🎯</div>
-                        <p className="text-gray-500 font-medium">No habits yet. Start building your routine!</p>
+                        <p className="text-black font-medium">No habits yet. Start building your routine!</p>
                       </div>
                     </td>
                   </tr>
@@ -281,7 +281,7 @@ export default function HabitTracker({ user }: Props) {
           {habits.length === 0 ? (
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-16 text-center">
               <div className="text-6xl mb-4">📊</div>
-              <p className="text-gray-500 font-medium text-lg">No habits yet. Add your first habit above!</p>
+              <p className="text-black font-medium text-lg">No habits yet. Add your first habit above!</p>
             </div>
           ) : (
             habits.map((habit) => {
